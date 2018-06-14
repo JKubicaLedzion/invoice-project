@@ -1,0 +1,4 @@
+<SOAP-ENV:Fault xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+<faultcode>SOAP-ENV:Server</faultcode>
+<faultstring xml:lang="en">Invoice with id 1 not found.</faultstring>
+</SOAP-ENV:Fault>

@@ -1,0 +1,4 @@
+<SOAP-ENV:Fault xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+  <faultcode>SOAP-ENV:Server</faultcode>
+  <faultstring xml:lang="en">Incorrect invoice data provided:&#xA;[Supplier name not provided.]</faultstring>
+</SOAP-ENV:Fault>

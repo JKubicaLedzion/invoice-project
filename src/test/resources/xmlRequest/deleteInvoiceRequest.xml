@@ -1,0 +1,3 @@
+<inv:deleteInvoiceRequest xmlns:inv="http://invoice-project.pl/invoices">
+  <inv:id>1</inv:id>
+</inv:deleteInvoiceRequest>

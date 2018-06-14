@@ -1,0 +1,4 @@
+<inv:getInvoicesWithinDateRangeRequest xmlns:inv="http://invoice-project.pl/invoices">
+<inv:fromDate>2017-10-01</inv:fromDate>
+<inv:toDate>2017-11-30</inv:toDate>
+</inv:getInvoicesWithinDateRangeRequest>
