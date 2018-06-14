@@ -1,4 +1,4 @@
-package pl.invoice;
+package pl.invoice.configuration;
 
 
 import org.springframework.boot.context.properties.ConfigurationProperties;

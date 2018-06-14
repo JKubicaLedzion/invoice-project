@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.invoice.DbPropertiesConfig;
+import pl.invoice.configuration.DbPropertiesConfig;
 import pl.invoice.database.Database;
 import pl.invoice.database.impl.DatabaseTest;
 

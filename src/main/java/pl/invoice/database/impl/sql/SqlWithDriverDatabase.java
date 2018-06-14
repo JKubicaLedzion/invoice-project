@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
-import pl.invoice.DbPropertiesConfig;
+import pl.invoice.configuration.DbPropertiesConfig;
 import pl.invoice.database.Database;
 import pl.invoice.database.impl.sql.mapper.ResultSetToInvoiceEntriesMapper;
 import pl.invoice.database.impl.sql.mapper.ResultSetToInvoiceMapper;

@@ -1,4 +1,4 @@
-package pl.invoice.service.invoice.soap;
+package pl.invoice.configuration;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;

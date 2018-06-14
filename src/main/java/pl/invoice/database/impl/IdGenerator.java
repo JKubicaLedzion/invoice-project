@@ -2,7 +2,7 @@ package pl.invoice.database.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.invoice.DbPropertiesConfig;
+import pl.invoice.configuration.DbPropertiesConfig;
 import pl.invoice.database.impl.multifile.PathGenerator;
 import pl.invoice.model.Invoice;
 

@@ -10,7 +10,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import pl.invoice.DbPropertiesConfig;
+import pl.invoice.configuration.DbPropertiesConfig;
 import pl.invoice.database.Database;
 import pl.invoice.database.impl.DatabaseTest;
 import pl.invoice.database.impl.FileHelper;

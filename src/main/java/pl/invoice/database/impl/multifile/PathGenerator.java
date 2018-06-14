@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.invoice.DbPropertiesConfig;
+import pl.invoice.configuration.DbPropertiesConfig;
 import pl.invoice.model.Invoice;
 
 import java.io.File;
