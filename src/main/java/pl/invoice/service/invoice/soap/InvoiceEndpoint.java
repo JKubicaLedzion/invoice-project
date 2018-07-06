@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 @Endpoint
 public class InvoiceEndpoint {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceController.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceEndpoint.class);
   private static final String NAMESPACE_URI = "http://invoice-project.pl/invoices";
 
   private InvoiceService invoiceService;

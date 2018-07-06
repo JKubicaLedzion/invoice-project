@@ -21,7 +21,7 @@ import javax.transaction.Transactional;
 @ConditionalOnProperty(name = "pl.invoice.database.Database", havingValue = "hibernate")
 public class HibernateDatabase implements Database {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SqlWithDriverDatabase.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(HibernateDatabase.class);
 
   private InvoiceRepository invoiceRepository;
   private CompanyRepository companyRepository;

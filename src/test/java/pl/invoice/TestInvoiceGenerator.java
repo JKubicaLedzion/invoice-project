@@ -34,9 +34,9 @@ public final class TestInvoiceGenerator {
 
     Address addressSupplier =
         new AddressBuilder()
-            .street("Street2")
-            .postalCode("2222")
-            .city("City2")
+            .street("Street")
+            .postalCode("1111")
+            .city("City")
             .country("PL")
             .build();
 

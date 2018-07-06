@@ -66,14 +66,11 @@ public class InvoiceEndpointTest {
   @Test
   public void getInvoicesShouldReturnInvoiceList() {
     // given:
-    Source requestAddInvoice =
-        new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_FIRST_INVOICE_REQUEST));
+    Source requestAddInvoice = new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_FIRST_INVOICE_REQUEST));
     Source requestAddSecondInvoice =
         new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_SECOND_INVOICE_REQUEST));
-    Source requestGetInvoice =
-        new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + GET_INVOICES_REQUEST));
-    Source responseGetInvoice =
-        new StringSource(getSoapEnvelope(BASE_PATH_RESPONSE + GET_INVOICES_RESPONSE));
+    Source requestGetInvoice = new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + GET_INVOICES_REQUEST));
+    Source responseGetInvoice = new StringSource(getSoapEnvelope(BASE_PATH_RESPONSE + GET_INVOICES_RESPONSE));
     mockClient.sendRequest(withPayload(requestAddInvoice)).andExpect(noFault());
     mockClient.sendRequest(withPayload(requestAddSecondInvoice)).andExpect(noFault());
     // when:
@@ -86,10 +83,8 @@ public class InvoiceEndpointTest {
   @Test
   public void getInvoiceByIdShouldReturnResponseWithInvoice() {
     // given:
-    Source requestAddInvoice =
-        new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_FIRST_INVOICE_REQUEST));
-    Source requestGetInvoice =
-        new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + GET_INVOICE_BY_ID_REQUEST));
+    Source requestAddInvoice = new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_FIRST_INVOICE_REQUEST));
+    Source requestGetInvoice = new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + GET_INVOICE_BY_ID_REQUEST));
     Source responseGetInvoice =
         new StringSource(getSoapEnvelope(BASE_PATH_RESPONSE + GET_INVOICE_BY_ID_RESPONSE));
     mockClient.sendRequest(withPayload(requestAddInvoice)).andExpect(noFault());
@@ -108,11 +103,9 @@ public class InvoiceEndpointTest {
     Source requestAddSecondInvoice =
         new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_SECOND_INVOICE_REQUEST));
     Source requestGetInvoices =
-        new StringSource(
-            getSoapEnvelope(BASE_PATH_REQUEST + GET_INVOICES_WITHIN_DATE_RANGE_REQUEST));
+        new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + GET_INVOICES_WITHIN_DATE_RANGE_REQUEST));
     Source responseGetInvoices =
-        new StringSource(
-            getSoapEnvelope(BASE_PATH_RESPONSE + GET_INVOICES_WITHIN_DATE_RANGE_RESPONSE));
+        new StringSource(getSoapEnvelope(BASE_PATH_RESPONSE + GET_INVOICES_WITHIN_DATE_RANGE_RESPONSE));
     mockClient.sendRequest(withPayload(requestAddFirstInvoice)).andExpect(noFault());
     mockClient.sendRequest(withPayload(requestAddSecondInvoice)).andExpect(noFault());
     // when:
@@ -125,8 +118,7 @@ public class InvoiceEndpointTest {
   @Test
   public void addInvoiceShouldAddInvoice() {
     // given:
-    Source request =
-        new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_FIRST_INVOICE_REQUEST));
+    Source request = new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_FIRST_INVOICE_REQUEST));
     Source response = new StringSource(getSoapEnvelope(BASE_PATH_RESPONSE + ADD_INVOICE_RESPONSE));
     // when:
     mockClient
@@ -138,11 +130,9 @@ public class InvoiceEndpointTest {
   @Test
   public void addInvoiceShouldReturnResponseWithFault() {
     // given:
-    Source request =
-        new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_INVOICE_WRONG_REQUEST));
+    Source request = new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_INVOICE_WRONG_REQUEST));
     Source response =
-        new StringSource(
-            getSoapEnvelope(BASE_PATH_RESPONSE + ADD_UPDATE_INVOICE_WRONG_DATA_RESPONSE));
+        new StringSource(getSoapEnvelope(BASE_PATH_RESPONSE + ADD_UPDATE_INVOICE_WRONG_DATA_RESPONSE));
     // when:
     mockClient
         .sendRequest(withPayload(request))
@@ -153,13 +143,11 @@ public class InvoiceEndpointTest {
   @Test
   public void updateInvoiceShouldReturnResponseWithFault() throws IOException {
     // given:
-    Source requestAddInvoice =
-        new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_FIRST_INVOICE_REQUEST));
+    Source requestAddInvoice = new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_FIRST_INVOICE_REQUEST));
     Source requestUpdateInvoice =
         new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + UPDATE_INVOICE_WRONG_REQUEST));
     Source responseUpdateInvoice =
-        new StringSource(
-            getSoapEnvelope(BASE_PATH_RESPONSE + ADD_UPDATE_INVOICE_WRONG_DATA_RESPONSE));
+        new StringSource(getSoapEnvelope(BASE_PATH_RESPONSE + ADD_UPDATE_INVOICE_WRONG_DATA_RESPONSE));
     mockClient.sendRequest(withPayload(requestAddInvoice)).andExpect(noFault());
     // when:
     mockClient
@@ -171,10 +159,8 @@ public class InvoiceEndpointTest {
   @Test
   public void updateInvoiceShouldUpdateExistingInvoice() {
     // given:
-    Source requestAddInvoice =
-        new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_FIRST_INVOICE_REQUEST));
-    Source requestUpdateInvoice =
-        new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + UPDATE_INVOICE_REQUEST));
+    Source requestAddInvoice = new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + ADD_FIRST_INVOICE_REQUEST));
+    Source requestUpdateInvoice = new StringSource(getSoapEnvelope(BASE_PATH_REQUEST + UPDATE_INVOICE_REQUEST));
     Source responseUpdateInvoice =
         new StringSource(getSoapEnvelope(BASE_PATH_RESPONSE + UPDATE_INVOICE_RESPONSE));
     Source requestGetInvoice =

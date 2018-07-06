@@ -4,12 +4,14 @@ import static pl.invoice.service.invoice.ValidationErrorMessages.DATABASE_EMPTY;
 import static pl.invoice.service.invoice.Validator.validateDates;
 import static pl.invoice.service.invoice.Validator.validateInvoice;
 
+import com.itextpdf.text.DocumentException;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.invoice.exception.InvoiceNotFoundException;
 import pl.invoice.model.Invoice;
 import pl.invoice.service.invoice.InvoiceService;
+import pl.invoice.service.pdf.PdfGenerator;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -37,9 +40,12 @@ public class InvoiceController {
 
   private InvoiceService invoiceService;
 
+  private PdfGenerator pdfGenerator;
+
   @Autowired
-  public InvoiceController(InvoiceService invoiceService) {
+  public InvoiceController(InvoiceService invoiceService, PdfGenerator pdfGenerator) {
     this.invoiceService = invoiceService;
+    this.pdfGenerator = pdfGenerator;
   }
 
   @GetMapping
@@ -130,5 +136,17 @@ public class InvoiceController {
     }
     invoiceService.deleteInvoice(id);
     return ResponseEntity.status(HttpStatus.OK).body("Invoice with id " + id + " deleted.");
+  }
+
+  @GetMapping(value = "{id}/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+  @ApiOperation(value = "Get invoice in pdf format", notes = "Generates pdf file for invoice with requested Id.")
+  public ResponseEntity getPdfInvoice(@PathVariable int id, @RequestParam String language)
+      throws IOException, DocumentException {
+    Optional<Invoice> invoice = invoiceService.getInvoiceById(id);
+    if (!invoice.isPresent()) {
+      LOGGER.debug("Invoice with id {} not found.", id);
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invoice with Id " + id + " not found.");
+    }
+    return ResponseEntity.status(HttpStatus.OK).body(pdfGenerator.getPdfDocument(invoice.get(), language));
   }
 }
