@@ -36,6 +36,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.invoice.model.Invoice;
 import pl.invoice.service.invoice.InvoiceService;
+import pl.invoice.service.pdf.PdfGenerator;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -58,6 +59,9 @@ public class InvoiceControllerTest {
 
   @Autowired
   private InvoiceController invoiceController;
+
+  @MockBean
+  private PdfGenerator pdfGenerator;
 
   @Before
   public void setup() {
