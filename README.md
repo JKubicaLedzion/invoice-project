@@ -18,4 +18,4 @@ Code coverage based on JaCoCo plugin - 83%.
 #### How to run:
 
 1. mvn clean verify
-2. java -jar target/invoices-justyna-1.0-SNAPSHOT.jar 
+2. java -jar target/invoice-project-1.0-SNAPSHOT.jar 
