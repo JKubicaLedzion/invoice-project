@@ -4,6 +4,7 @@ import static pl.invoice.database.impl.sql.TableLabel.DUE_DATE;
 import static pl.invoice.database.impl.sql.TableLabel.ID;
 import static pl.invoice.database.impl.sql.TableLabel.ISSUE_DATE;
 import static pl.invoice.database.impl.sql.TableLabel.IS_PAID;
+import static pl.invoice.database.impl.sql.TableLabel.MODIFICATION_DATE;
 
 import pl.invoice.builders.InvoiceBuilder;
 import pl.invoice.model.Invoice;
@@ -24,6 +25,7 @@ public class ResultSetToInvoiceMapper {
         .supplier(ResultSetToCompanyMapper.getSupplier(resultSet))
         .issueDate(LocalDate.parse(resultSet.getString(ISSUE_DATE), DateTimeFormatter.ISO_DATE))
         .dueDate(LocalDate.parse(resultSet.getString(DUE_DATE), DateTimeFormatter.ISO_DATE))
+        .modificationDate(resultSet.getTimestamp(MODIFICATION_DATE).toLocalDateTime())
         .entryList(entryList)
         .isPaid(resultSet.getBoolean(IS_PAID))
         .build();

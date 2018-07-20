@@ -41,6 +41,7 @@ public class TableLabel {
   public static final String ID = "id";
   public static final String ISSUE_DATE = "issue_date";
   public static final String DUE_DATE = "due_date";
+  public static final String MODIFICATION_DATE = "modification_date";
   public static final String VAT_NO_CUSTOMER = "vat_no_customer";
   public static final String VAT_NO_SUPPLIER = "vat_no_supplier";
   public static final String IS_PAID = "is_paid";

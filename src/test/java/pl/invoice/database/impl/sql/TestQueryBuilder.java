@@ -22,6 +22,7 @@ public class TestQueryBuilder {
       + " CREATE TABLE \"Invoice\" ("
       + " id BIGSERIAL,"
       + " issue_date DATE NOT NULL,"
+      + " modification_date TIMESTAMP NOT NULL,"
       + " due_date DATE NOT NULL,"
       + " vat_no_customer VARCHAR(255) NOT NULL,"
       + " vat_no_supplier VARCHAR(255) NOT NULL,"

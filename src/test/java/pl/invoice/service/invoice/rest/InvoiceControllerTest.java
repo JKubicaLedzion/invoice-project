@@ -35,6 +35,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.invoice.model.Invoice;
+import pl.invoice.service.email.EmailService;
 import pl.invoice.service.invoice.InvoiceService;
 import pl.invoice.service.pdf.PdfGenerator;
 
@@ -57,11 +58,15 @@ public class InvoiceControllerTest {
   @MockBean
   private InvoiceService invoiceService;
 
+  @MockBean
+  private PdfGenerator pdfGenerator;
+
+  @MockBean
+  private EmailService emailService;
+
   @Autowired
   private InvoiceController invoiceController;
 
-  @MockBean
-  private PdfGenerator pdfGenerator;
 
   @Before
   public void setup() {
@@ -185,6 +190,7 @@ public class InvoiceControllerTest {
   public void updateInvoiceShouldReturnOkResponse() throws Exception {
     // given:
     Mockito.when(invoiceService.updateInvoice(getUpdatedFirstInvoice())).thenReturn(1);
+    Mockito.when(invoiceService.getInvoiceById(1)).thenReturn(Optional.of(getUpdatedFirstInvoice()));
     // when:
     mvc.perform(put(PATH)
         .content(getJsonFormatStringForUpdatedFirstInv())
