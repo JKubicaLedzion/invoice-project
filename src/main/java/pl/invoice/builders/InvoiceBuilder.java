@@ -5,6 +5,7 @@ import pl.invoice.model.Invoice;
 import pl.invoice.model.InvoiceEntry;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class InvoiceBuilder {
@@ -47,6 +48,11 @@ public class InvoiceBuilder {
 
   public InvoiceBuilder isPaid(boolean isPaid) {
     invoice.setPaid(isPaid);
+    return this;
+  }
+
+  public InvoiceBuilder modificationDate(LocalDateTime modificationDate) {
+    invoice.setModificationTime(modificationDate);
     return this;
   }
 

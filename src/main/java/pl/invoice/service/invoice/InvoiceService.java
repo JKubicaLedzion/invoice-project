@@ -8,6 +8,7 @@ import pl.invoice.model.Invoice;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,5 +44,9 @@ public class InvoiceService {
 
   public void deleteInvoice(int id) throws IOException, InvoiceNotFoundException {
     database.deleteInvoice(id);
+  }
+
+  public List<Invoice> getLastUpdatedInvoices(LocalDateTime fromDate, LocalDateTime toDate) throws IOException {
+    return database.getLastUpdatedInvoices(fromDate, toDate);
   }
 }

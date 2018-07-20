@@ -18,6 +18,7 @@ import static pl.invoice.database.impl.sql.TableLabel.INVOICE_ENTRY;
 import static pl.invoice.database.impl.sql.TableLabel.INVOICE_ID;
 import static pl.invoice.database.impl.sql.TableLabel.ISSUE_DATE;
 import static pl.invoice.database.impl.sql.TableLabel.IS_PAID;
+import static pl.invoice.database.impl.sql.TableLabel.MODIFICATION_DATE;
 import static pl.invoice.database.impl.sql.TableLabel.NAME_COMPANY;
 import static pl.invoice.database.impl.sql.TableLabel.NAME_CUSTOMER;
 import static pl.invoice.database.impl.sql.TableLabel.NAME_SUPPLIER;
@@ -44,7 +45,8 @@ import pl.invoice.model.InvoiceEntry;
 public final class QueryBuilder {
 
   private static final String QUERY_INVOICES = "SELECT invoice.id, invoice.issue_date, invoice.due_date, "
-      + "invoice.is_paid, invoice.vat_no_customer, "
+      + "invoice.is_paid, invoice.modification_date, "
+      + "invoice.vat_no_customer, "
       + "customer.name AS " + NAME_CUSTOMER + ", "
       + "customer.street AS " + STREET_CUSTOMER + ","
       + "customer.postal_code AS " + POSTAL_CODE_CUSTOMER + ", "
@@ -84,11 +86,13 @@ public final class QueryBuilder {
   public static String insertInvoiceQuery(Invoice invoice) {
     return "INSERT INTO " + INVOICE + " ("
         + ISSUE_DATE + ","
+        + MODIFICATION_DATE + ","
         + DUE_DATE + ","
         + VAT_NO_CUSTOMER + ","
         + VAT_NO_SUPPLIER + ","
         + IS_PAID + ") VALUES ("
         + "'" + invoice.getIssueDate() + "', "
+        + "'" + invoice.getModificationTime() + "', "
         + "'" + invoice.getDueDate() + "', "
         + "'" + invoice.getCustomer().getVatNumber() + "', "
         + "'" + invoice.getSupplier().getVatNumber() + "', "
@@ -125,6 +129,7 @@ public final class QueryBuilder {
     return "UPDATE " + INVOICE + "SET "
         + ISSUE_DATE + "='" + invoice.getIssueDate() + "', "
         + DUE_DATE + "='" + invoice.getDueDate() + "', "
+        + MODIFICATION_DATE + "='" + invoice.getModificationTime() + "', "
         + VAT_NO_CUSTOMER + "='" + invoice.getCustomer().getVatNumber() + "', "
         + VAT_NO_SUPPLIER + "='" + invoice.getSupplier().getVatNumber() + "', "
         + IS_PAID + "='" + invoice.isPaid() + "'"

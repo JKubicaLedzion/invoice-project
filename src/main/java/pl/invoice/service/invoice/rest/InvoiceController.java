@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.invoice.exception.InvoiceNotFoundException;
 import pl.invoice.model.Invoice;
+import pl.invoice.service.email.EmailService;
 import pl.invoice.service.invoice.InvoiceService;
 import pl.invoice.service.pdf.PdfGenerator;
 
@@ -31,6 +32,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import javax.mail.MessagingException;
 
 @RequestMapping("/invoices")
 @RestController
@@ -39,21 +41,19 @@ public class InvoiceController {
   private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceController.class);
 
   private InvoiceService invoiceService;
-
   private PdfGenerator pdfGenerator;
+  private EmailService emailService;
 
   @Autowired
-  public InvoiceController(InvoiceService invoiceService, PdfGenerator pdfGenerator) {
+  public InvoiceController(InvoiceService invoiceService, PdfGenerator pdfGenerator, EmailService emailService) {
     this.invoiceService = invoiceService;
     this.pdfGenerator = pdfGenerator;
+    this.emailService = emailService;
   }
 
   @GetMapping
-  @ApiOperation(
-      value = "Returns all invoices.",
-      notes = "Returns a complete list of invoices saved in Database.",
-      response = Invoice.class,
-      responseContainer = "list")
+  @ApiOperation(value = "Returns all invoices.", notes = "Returns a complete list of invoices saved in Database.",
+      response = Invoice.class, responseContainer = "list")
   public ResponseEntity getInvoices() throws IOException {
     List<Invoice> invoiceList = invoiceService.getInvoices();
     if (invoiceList.isEmpty()) {
@@ -63,9 +63,7 @@ public class InvoiceController {
   }
 
   @GetMapping("{id}")
-  @ApiOperation(
-      value = "Returns invoice by Id.",
-      notes = "Returns a only one invoice with requested Id.",
+  @ApiOperation(value = "Returns invoice by Id.", notes = "Returns a only one invoice with requested Id.",
       response = Invoice.class)
   public ResponseEntity getInvoiceById(@PathVariable int id) throws IOException {
     Optional invoice = invoiceService.getInvoiceById(id);
@@ -78,15 +76,12 @@ public class InvoiceController {
   }
 
   @GetMapping(value = "/dates")
-  @ApiOperation(
-      value = "Returns invoices within date range.",
+  @ApiOperation(value = "Returns invoices within date range.",
       notes = "Returns a list of invoices which issue date is within requested date range.",
-      response = Invoice.class,
-      responseContainer = "list")
+      response = Invoice.class, responseContainer = "list")
   public ResponseEntity getInvoicesWithinDateRange(
       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("fromDate") LocalDate fromDate,
-      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("toDate") LocalDate toDate)
-      throws IOException {
+      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("toDate") LocalDate toDate) throws IOException {
     String errorMessage = validateDates(fromDate, toDate);
     if (!errorMessage.isEmpty()) {
       LOGGER.debug("Incorrect dates provided.", errorMessage);
@@ -97,22 +92,22 @@ public class InvoiceController {
   }
 
   @PostMapping
-  @ApiOperation(
-      value = "Saves invoice to Database.",
-      notes = "Saves invoice to Database if all required information are provided.")
-  public ResponseEntity addInvoice(@RequestBody Invoice invoice) throws IOException {
+  @ApiOperation(value = "Saves invoice to Database.", notes = "Saves invoice to Database if all required information"
+      + " are provided and sends invoice in pdf to e-mail address provided in application properties.")
+  public ResponseEntity addInvoice(@RequestBody Invoice invoice, @RequestParam(defaultValue = "en") String language)
+      throws IOException, MessagingException, DocumentException {
     List<String> errorList = validateInvoice(invoice);
     if (!errorList.isEmpty()) {
       LOGGER.debug("Incorrect data provided while adding invoice.", errorList);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorList);
     }
     invoiceService.addInvoice(invoice);
+    emailService.sendMailWithNewInvoice(invoice, language);
     return ResponseEntity.status(HttpStatus.OK).body(invoice.getId());
   }
 
   @PutMapping
-  @ApiOperation(
-      value = "Updates existing invoice.",
+  @ApiOperation(value = "Updates existing invoice.",
       notes = "Updates existing invoice in Database if all required information are provided.")
   public ResponseEntity updateInvoice(@RequestBody Invoice invoice) throws InvoiceNotFoundException, IOException {
     List<String> errorList = validateInvoice(invoice);
@@ -120,14 +115,17 @@ public class InvoiceController {
       LOGGER.debug("Incorrect data provided while updating invoice.", errorList);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorList);
     }
+    Optional<Invoice> invoiceToBeUpdated = invoiceService.getInvoiceById(invoice.getId());
+    if (!invoiceToBeUpdated.isPresent()) {
+      LOGGER.debug("Invoice with id {} not found.", invoice.getId());
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invoice with Id " + invoice.getId() + " not found.");
+    }
     invoiceService.updateInvoice(invoice);
     return ResponseEntity.status(HttpStatus.OK).body(invoice.getId());
   }
 
   @DeleteMapping("{id}")
-  @ApiOperation(
-      value = "Deletes invoice by Id",
-      notes = "Deletes invoice with requested Id from database.")
+  @ApiOperation(value = "Deletes invoice by Id", notes = "Deletes invoice with requested Id from database.")
   public ResponseEntity deleteInvoice(@PathVariable int id) throws IOException, InvoiceNotFoundException {
     if (!invoiceService.getInvoiceById(id).isPresent()) {
       LOGGER.debug("Invoice with id {} not found.", id);

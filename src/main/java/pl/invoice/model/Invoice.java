@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -46,6 +47,9 @@ public class Invoice {
   @NotNull
   private boolean isPaid;
 
+  @NotNull
+  private LocalDateTime modificationTime;
+
   public Invoice(Company supplier, Company customer, List<InvoiceEntry> entryList, LocalDate issueDate,
       LocalDate dueDate, boolean isPaid) {
     this.supplier = supplier;
@@ -54,6 +58,7 @@ public class Invoice {
     this.issueDate = issueDate;
     this.dueDate = dueDate;
     this.isPaid = isPaid;
+    this.modificationTime = LocalDateTime.now();
   }
 
   public Invoice() {
@@ -122,6 +127,14 @@ public class Invoice {
     isPaid = paid;
   }
 
+  public LocalDateTime getModificationTime() {
+    return modificationTime;
+  }
+
+  public void setModificationTime(LocalDateTime modificationTime) {
+    this.modificationTime = modificationTime;
+  }
+
   @JsonIgnore
   public BigDecimal getTotalNetAmount() {
     return entryList.stream().map(InvoiceEntry::getNetAmount)
@@ -155,12 +168,13 @@ public class Invoice {
         && Objects.equals(customer, invoice.customer)
         && Objects.equals(entryList, invoice.entryList)
         && Objects.equals(issueDate, invoice.issueDate)
-        && Objects.equals(dueDate, invoice.dueDate);
+        && Objects.equals(dueDate, invoice.dueDate)
+        && Objects.equals(modificationTime, invoice.modificationTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, supplier, customer, entryList, issueDate, dueDate, isPaid);
+    return Objects.hash(id, supplier, customer, entryList, issueDate, dueDate, isPaid, modificationTime);
   }
 }
 

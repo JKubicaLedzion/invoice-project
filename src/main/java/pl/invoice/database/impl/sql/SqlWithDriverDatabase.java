@@ -37,6 +37,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -96,6 +97,7 @@ public class SqlWithDriverDatabase implements Database {
     addOrUpdateCompany(invoice.getCustomer());
     addOrUpdateCompany(invoice.getSupplier());
 
+    invoice.setModificationTime(LocalDateTime.now());
     executeStatement(updateInvoiceQuery(invoice));
 
     for (InvoiceEntry invoiceEntry : invoice.getEntryList()) {

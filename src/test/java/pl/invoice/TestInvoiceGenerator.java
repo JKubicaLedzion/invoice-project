@@ -15,6 +15,7 @@ import pl.invoice.service.tax.CalculationResult;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +68,7 @@ public final class TestInvoiceGenerator {
         .entryList(entryList)
         .issueDate(LocalDate.of(2017, 12, 12))
         .dueDate(LocalDate.of(2018, 01, 31))
+        .modificationDate(LocalDateTime.of(2018, 12, 12, 16, 30, 1))
         .isPaid(true)
         .id(1)
         .build();
@@ -116,6 +118,7 @@ public final class TestInvoiceGenerator {
         .supplier(supplier)
         .issueDate(LocalDate.of(2017, 12, 30))
         .dueDate(LocalDate.of(2018, 01, 31))
+        .modificationDate(LocalDateTime.of(2018, 12, 12, 16, 30, 1))
         .entryList(entryList)
         .isPaid(true)
         .id(2)
@@ -166,6 +169,7 @@ public final class TestInvoiceGenerator {
         .supplier(supplier)
         .issueDate(LocalDate.of(2017, 11, 29))
         .dueDate(LocalDate.of(2018, 01, 31))
+        .modificationDate(LocalDateTime.of(2018, 12, 12, 16, 30, 1))
         .entryList(entryList)
         .isPaid(false)
         .id(3)
@@ -216,6 +220,7 @@ public final class TestInvoiceGenerator {
         .supplier(supplier)
         .issueDate(LocalDate.of(2017, 12, 30))
         .dueDate(LocalDate.of(2018, 01, 31))
+        .modificationDate(LocalDateTime.of(2018, 12, 12, 16, 30, 1))
         .entryList(entryList)
         .isPaid(true)
         .id(2)
@@ -267,6 +272,7 @@ public final class TestInvoiceGenerator {
         .entryList(entryList)
         .issueDate(LocalDate.of(2017, 11, 29))
         .dueDate(LocalDate.of(2018, 01, 31))
+        .modificationDate(LocalDateTime.of(2018, 12, 12, 16, 30, 1))
         .isPaid(true)
         .id(1)
         .build();
@@ -312,6 +318,7 @@ public final class TestInvoiceGenerator {
         .supplier(supplier)
         .entryList(entryList)
         .dueDate(LocalDate.of(2018, 01, 31))
+        .modificationDate(LocalDateTime.of(2018, 12, 12, 16, 30, 1))
         .id(1)
         .build();
   }
